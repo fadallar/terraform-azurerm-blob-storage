@@ -1,4 +1,9 @@
 # Storage Firewall
+variable "enable_private_endpoint" {
+  description = "Boolean to enable private endpoint connection for the storage account. This template only enable blob sub resource"
+  type = bool
+  default = true
+}
 
 variable "network_rules_enabled" {
   description = "Boolean to enable Network Rules on the Storage Account, requires `network_bypass`, `allowed_cidrs`, `subnet_ids` or `default_firewall_action` correctly set if enabled."
