@@ -40,12 +40,6 @@ variable "private_dns_zone_ids" {
   type = string
 }
 
-variable "enable_private_endpoint" {
-  description = "Boolean used to enable or not private endpoint. Manadatory if private endpoint is used"
-  type = bool
-  default = true
-}
-
 variable "private_endpoint_subnet_id" {
   description = "Subnet Id the private endpoint is associated with. Mandatory if private endpoint is used"
   type = string
