@@ -11,7 +11,7 @@ resource "azurerm_storage_account_network_rules" "network_rules" {
 // Private Endpoint for Blob Sub-resource only 
 resource "azurerm_private_endpoint" "storageacctpep" {
   count = var.enable_private_endpoint == true ? 1 :0
-  name                = format("pe-%s", local.sa_name)
+  name                = format("pe-%s", local.name)
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.private_endpoint_subnet_id
