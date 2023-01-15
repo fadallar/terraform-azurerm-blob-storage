@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storage" {
-  name                = local.sa_name
+  name                = local.name
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -9,14 +9,17 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = var.account_replication_type
 
   min_tls_version                 = var.min_tls_version
-  allow_nested_items_to_be_public = false
+  
   shared_access_key_enabled       = var.shared_access_key_enabled
   large_file_share_enabled        = var.account_kind != "BlockBlobStorage"
-  # Hard coded values and not exposed as variables
-  enable_https_traffic_only       = true
-  cross_tenant_replication_enabled = false
   public_network_access_enabled = var.public_network_access_enabled
   default_to_oauth_authentication = var.default_to_oauth_authentication
+  
+  // Hard coded values and not exposed as variables
+  allow_nested_items_to_be_public = false
+  enable_https_traffic_only       = true
+  cross_tenant_replication_enabled = false
+  
 
   dynamic "identity" {
     for_each = var.identity_type == null ? [] : ["enabled"]
@@ -82,7 +85,9 @@ resource "azurerm_storage_account" "storage" {
 
   tags = merge(var.default_tags, var.extra_tags)
 }
-# Not required as this is enabled at the subscription level 
+
+// Not required as this is enabled at the subscription level 
+
 #resource "azurerm_advanced_threat_protection" "threat_protection" {
 #  enabled            = var.advanced_threat_protection_enabled
 #  target_resource_id = azurerm_storage_account.storage.id

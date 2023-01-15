@@ -1,25 +1,18 @@
 # Generic naming variables
-variable "name_prefix" {
-  description = "Optional prefix for the generated name"
+
+variable "custom_name" {
+  description = "Custom Azure Storage Account Name, it will overide the generate name if set"
   type        = string
   default     = ""
 }
 
-variable "name_suffix" {
-  description = "Optional suffix for the generated name"
+variable "workload_info" {
+  description = "Workload additional info to be used in the resource name"
   type        = string
   default     = ""
 }
 
-variable "use_caf_naming" {
-  description = "Use the Azure CAF naming provider to generate default resource name. `storage_account_custom_name` override this if set. Legacy default name is used if this is set to `false`."
-  type        = bool
-  default     = true
-}
-
-# Custom naming override
-variable "storage_account_custom_name" {
-  description = "Custom Azure Storage Account name, generated if not set"
+variable "landing_zone_slug" {
+  description = "Landing zone acronym,it will beused to generate the resource nae"
   type        = string
-  default     = ""
 }

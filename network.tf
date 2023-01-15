@@ -8,6 +8,7 @@ resource "azurerm_storage_account_network_rules" "network_rules" {
   ip_rules                   = local.storage_ip_rules
   virtual_network_subnet_ids = var.default_firewall_action == "Deny" ? var.subnet_ids : []
 }
+// Private Endpoint for Blob Sub-resource only 
 resource "azurerm_private_endpoint" "storageacctpep" {
   count = var.enable_private_endpoint == true ? 1 :0
   name                = format("pe-%s", local.sa_name)
