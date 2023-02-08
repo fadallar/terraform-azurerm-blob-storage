@@ -5,8 +5,8 @@ data "azurerm_monitor_diagnostic_categories" "diagcategories" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageaccountdiagnostics" {
-  name               = "default-Diagnostics-Logs"
-  target_resource_id = azurerm_storage_account.storage.id
+  name                       = "default-Diagnostics-Logs"
+  target_resource_id         = azurerm_storage_account.storage.id
   log_analytics_workspace_id = var.diag_log_analytics_workspace_id
 
   dynamic "metric" {

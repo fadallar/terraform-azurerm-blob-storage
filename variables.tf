@@ -72,8 +72,8 @@ variable "min_tls_version" {
 
 variable "default_to_oauth_authentication" {
   description = "Default to Azure Active Directory authorization in the Azure portal when accessing the Storage Account."
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 #Hard coded in our case to false
 #variable "public_nested_items_allowed" {

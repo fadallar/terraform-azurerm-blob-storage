@@ -33,17 +33,18 @@ variable "default_firewall_action" {
 ############  Private Endpoint ############
 variable "enable_private_endpoint" {
   description = "Boolean to enable private endpoint connection for the storage account. This template only enable blob sub resource"
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
-variable "private_dns_zone_ids" {
-  description = ""
-  type = string
+variable "private_dns_zone_blob_id" {
+  description = "Private DNS Zone Id for Storage Blob sub resource"
+  type        = string
+  default     = null
 }
 
 variable "private_endpoint_subnet_id" {
   description = "Subnet Id the private endpoint is associated with. Mandatory if private endpoint is used"
-  type = string
-  default = null
+  type        = string
+  default     = null
 }
