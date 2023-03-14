@@ -36,8 +36,8 @@ variable "enable_private_endpoint" {
   default     = true
 }
 
-variable "private_dns_zone_ids" {
-  description = ""
+variable "private_dns_zone_blob_id" {
+  description = "Private DNS Zone Id for Blob"
   type        = string
 }
 
