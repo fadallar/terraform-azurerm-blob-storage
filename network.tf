@@ -1,14 +1,16 @@
 resource "azurerm_storage_account_network_rules" "network_rules" {
   for_each = toset(var.network_rules_enabled && !var.nfsv3_enabled ? ["enabled"] : [])
 
-  storage_account_id = azurerm_storage_account.storage.id
+  storage_account_id = azurerm_storage_account.this.id
 
   default_action             = var.default_firewall_action
   bypass                     = var.network_bypass
   ip_rules                   = local.storage_ip_rules
   virtual_network_subnet_ids = var.default_firewall_action == "Deny" ? var.subnet_ids : []
 }
-// Private Endpoint for Blob Sub-resource only 
+
+###Private Endpoint for Blob Sub-resource only 
+
 resource "azurerm_private_endpoint" "storageacctpep" {
   count               = var.enable_private_endpoint == true ? 1 : 0
   name                = format("pe-%s", local.name)
@@ -24,7 +26,7 @@ resource "azurerm_private_endpoint" "storageacctpep" {
   private_service_connection {
     name                           = "storageaccountprivatelink"
     is_manual_connection           = false
-    private_connection_resource_id = azurerm_storage_account.storage.id
+    private_connection_resource_id = azurerm_storage_account.this.id
     subresource_names              = ["blob"]
   }
 }
