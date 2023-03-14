@@ -1,4 +1,4 @@
-resource "azurerm_storage_account" "storage" {
+resource "azurerm_storage_account" "this" {
   name                = local.name
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -8,18 +8,28 @@ resource "azurerm_storage_account" "storage" {
   account_kind             = var.account_kind
   account_replication_type = var.account_replication_type
 
-  min_tls_version                 = var.min_tls_version
-  
+  min_tls_version = var.min_tls_version
+
   shared_access_key_enabled       = var.shared_access_key_enabled
-  large_file_share_enabled        = var.account_kind != "BlockBlobStorage"
-  public_network_access_enabled = var.public_network_access_enabled
+  large_file_share_enabled        = var.large_file_share_enabled
+  public_network_access_enabled   = var.public_network_access_enabled
   default_to_oauth_authentication = var.default_to_oauth_authentication
-  
-  // Hard coded values and not exposed as variables
-  allow_nested_items_to_be_public = false
-  enable_https_traffic_only       = true
-  cross_tenant_replication_enabled = false
-  
+
+  ##
+  allow_nested_items_to_be_public  = var.allow_nested_items_to_be_public
+  cross_tenant_replication_enabled = var.cross_tenant_replication_enabled
+  enable_https_traffic_only        = var.enable_https_traffic_only
+
+  ##
+
+  is_hns_enabled = var.hns_enabled
+  nfsv3_enabled  = var.nfsv3_enabled
+  sftp_enabled   = var.sftp_enabled
+
+  queue_encryption_key_type         = var.queue_encryption_key_type
+  table_encryption_key_type         = var.table_encryption_key_type
+  infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
+
 
   dynamic "identity" {
     for_each = var.identity_type == null ? [] : ["enabled"]
@@ -31,8 +41,7 @@ resource "azurerm_storage_account" "storage" {
 
   dynamic "blob_properties" {
     for_each = (
-      var.account_kind != "FileStorage" && (var.storage_blob_data_protection != null || var.storage_blob_cors_rule != null) ?
-      ["enabled"] : []
+      var.account_kind != "FileStorage" && (var.storage_blob_data_protection != null) ? ["enabled"] : []
     )
 
     content {
@@ -73,22 +82,17 @@ resource "azurerm_storage_account" "storage" {
     }
   }
 
-  dynamic "network_rules" {
-    for_each = var.nfsv3_enabled ? ["enabled"] : []
-    content {
-      default_action             = "Deny"
-      bypass                     = var.network_bypass
-      ip_rules                   = local.storage_ip_rules
-      virtual_network_subnet_ids = var.subnet_ids
-    }
-  }
-
   tags = merge(var.default_tags, var.extra_tags)
 }
 
-// Not required as this is enabled at the subscription level 
+##############################################################################
+# TO DO Blocks
+#custom_domain - (Optional) A custom_domain block as documented below.
+#customer_managed_key - (Optional) A customer_managed_key block as documented below.
+#queue_properties
+#static_website
+#share_properties
+#routing 
+#sas_policy
 
-#resource "azurerm_advanced_threat_protection" "threat_protection" {
-#  enabled            = var.advanced_threat_protection_enabled
-#  target_resource_id = azurerm_storage_account.storage.id
-#}
+

@@ -12,6 +12,6 @@ variable "extra_tags" {
 
 variable "default_tags" {
   description = "Base taggings"
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }
