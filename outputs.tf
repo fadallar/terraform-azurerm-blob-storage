@@ -28,12 +28,76 @@ output "storage_account_identity" {
 #  value       = azurerm_storage_container.container
 #}
 
-#primary_location - The primary location of the storage account.
-#secondary_location - The secondary location of the storage account.
-#primary_blob_endpoint - The endpoint URL for blob storage in the primary location.
-#primary_blob_host - The hostname with port if applicable for blob storage in the primary location.
-#secondary_blob_endpoint - The endpoint URL for blob storage in the secondary location.
-#secondary_blob_host - The hostname with port if applicable for blob storage in the secondary location.
+output "primary_location" {
+  description = "The primary location of the storage account."
+  value       = azurerm_storage_account.this.primary_location
+}
+
+output "secondary_location" {
+  description = "The secondary location of the storage account."
+  value       = azurerm_storage_account.this.secondary_location
+}
+
+output "primary_access_key" {
+  description = "The primary access key for the storage account."
+  sensitive   = true
+  value       = azurerm_storage_account.this.primary_access_key
+}
+
+output "secondary_access_key" {
+  description = "The secondary access key for the storage account."
+  sensitive   = true
+  value       = azurerm_storage_account.this.secondary_access_key
+}
+
+output "primary_connection_string" {
+  description = "The connection string associated with the primary location."
+  sensitive   = true
+  value       = azurerm_storage_account.this.primary_connection_string
+
+}
+
+output "secondary_connection_string" {
+  description = "The connection string associated with the secondary location."
+  sensitive   = true
+  value       = azurerm_storage_account.this.secondary_connection_string
+}
+
+output "primary_blob_connection_string" {
+  description = "The connection string associated with the primary blob location."
+  sensitive   = true
+  value       = azurerm_storage_account.this.primary_blob_connection_string
+
+}
+
+output "secondary_blob_connection_string" {
+  description = "The connection string associated with the secondary blob location."
+  sensitive   = true
+  value       = azurerm_storage_account.this.secondary_blob_connection_string
+
+}
+
+output "primary_blob_endpoint" {
+  description = "The endpoint URL for blob storage in the primary location."
+  value       = azurerm_storage_account.this.primary_blob_endpoint
+}
+
+output "primary_blob_host" {
+  description = "The hostname with port if applicable for blob storage in the primary location."
+  value       = azurerm_storage_account.this.primary_blob_host
+}
+
+output "secondary_blob_endpoint" {
+  description = "The endpoint URL for blob storage in the secondary location."
+  value       = azurerm_storage_account.this.secondary_blob_endpoint
+}
+
+output "secondary_blob_host" {
+  description = "The hostname with port if applicable for blob storage in the secondary location."
+  value       = azurerm_storage_account.this.secondary_blob_host
+}
+
+
 #primary_queue_endpoint - The endpoint URL for queue storage in the primary location.
 #primary_queue_host - The hostname with port if applicable for queue storage in the primary location.
 #secondary_queue_endpoint - The endpoint URL for queue storage in the secondary location.
@@ -54,10 +118,4 @@ output "storage_account_identity" {
 #primary_web_host - The hostname with port if applicable for web storage in the primary location.
 #secondary_web_endpoint - The endpoint URL for web storage in the secondary location.
 #secondary_web_host - The hostname with port if applicable for web storage in the secondary location.
-#primary_access_key - The primary access key for the storage account.
-#secondary_access_key - The secondary access key for the storage account.
-#primary_connection_string - The connection string associated with the primary location.
-#secondary_connection_string - The connection string associated with the secondary location.
-#primary_blob_connection_string - The connection string associated with the primary blob location.
-#secondary_blob_connection_string - The connection string associated with the secondary blob location.
 #identity
