@@ -6,7 +6,7 @@ resource "azurerm_user_assigned_identity" "blob_data_contributor" {
 }
 
 resource "azurerm_role_assignment" "blob_data_contributor" {
-  scope                = azurerm_storage_account.this.name
+  scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_user_assigned_identity.blob_data_contributor.principal_id
 }
